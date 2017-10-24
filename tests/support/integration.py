@@ -199,7 +199,7 @@ class TestCaseWithFakeYammerServer(TestCase):
             self._fake_yammer_server.run_as_process()
         except:
             if hasattr(self, "_fake_yammer_server"):
-                self._fake_yammer_server.stop()
+                self._fake_yammer_server.stop_process()
             raise
 
     def tearDown(self):
