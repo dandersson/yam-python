@@ -68,12 +68,20 @@ class Client(object):
         return self._request("delete", path, **kwargs)
 
     def _request(self, method, path, **kwargs):
-        response = requests.request(
-            method=method,
-            url=self._build_url(path),
-            headers=self._build_headers(),
-            params=kwargs,
-        )
+        if method in ("post", "put"):
+            response = requests.request(
+                method=method,
+                url=self._build_url(path),
+                headers=self._build_headers(),
+                data=kwargs,
+            )
+        else:
+            response = requests.request(
+                method=method,
+                url=self._build_url(path),
+                headers=self._build_headers(),
+                params=kwargs,
+            )
         return self._parse_response(response)
 
     def _build_url(self, path):

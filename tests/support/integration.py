@@ -68,7 +68,7 @@ class FakeYammerServer(object):
             return self._message_list_json(
                 count=1,
                 first_id=4,
-                body=flask.request.args.get("body"),
+                body=flask.request.values.get("body"),
             )
 
         @self._server.route("/api/v1/messages/<id>.json", methods=["DELETE"])
@@ -80,7 +80,7 @@ class FakeYammerServer(object):
             methods=["POST", "DELETE"],
         )
         def like_or_unlike_message():
-            if "message_id" in flask.request.args:
+            if "message_id" in flask.request.values:
                 return " "
             else:
                 return " ", 400
@@ -93,8 +93,8 @@ class FakeYammerServer(object):
         def create_user():
             return self._user_json(
                 user_id=4,
-                first_name=flask.request.args.get("first_name"),
-                last_name=flask.request.args.get("last_name"),
+                first_name=flask.request.values.get("first_name"),
+                last_name=flask.request.values.get("last_name"),
             )
 
         @self._server.route("/api/v1/users/current.json", methods=["GET"])

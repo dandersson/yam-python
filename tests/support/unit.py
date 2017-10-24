@@ -81,12 +81,20 @@ class HTTPHelpers(object):
         self.assert_request("put", url, params, headers)
 
     def assert_request(self, method, url, params=ANY, headers=ANY):
-        requests.request.assert_called_with(
-            method=method,
-            url=url,
-            params=params,
-            headers=headers,
-        )
+        if method in ("post", "put"):
+            requests.request.assert_called_with(
+                method=method,
+                url=url,
+                data=params,
+                headers=headers,
+            )
+        else:
+            requests.request.assert_called_with(
+                method=method,
+                url=url,
+                params=params,
+                headers=headers,
+            )
 
 
 class TestCaseWithMockClient(TestCase):
